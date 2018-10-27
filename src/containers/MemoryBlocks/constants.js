@@ -1,2 +1,30 @@
 export const DEFAULT_SIDE_LENGTH = 2;
 export const GAME_WRAPPER_SIZE = 600;
+
+export const BLOCK_COLORS = [
+    '#ff5353',
+    '#ffc429',
+    '#5980c1',
+    '#fbe9b7',
+    '#b2ff59',
+    '#ff6e40',
+    '#ffff00',
+    '#69f0ae',
+    '#FF9F1C',
+    '#e0e0e0',
+    '#f06292',
+    '#ba68c8',
+    '#2a3eb1',
+    '#827717',
+    '#00E5FF',
+    '#8BC34A',
+    '#E91E63',
+    '#FFE2D1',
+    '#FFDF64',
+    '#134611',
+    '#DCABDF',
+    '#78FFD6',
+    '#C8553D',
+    '#3185FC',
+    '#FFFFFF',
+];

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { StyledMemoryBlocks } from 'containers/MemoryBlocks/Styled';
+import { StyledMemoryBlocks, StyledBlock } from 'containers/MemoryBlocks/Styled';
 
 import {
     makeSelectBlocks,
@@ -26,16 +26,20 @@ class MemoryBlocks extends Component {
         } = this.props;
         return(
             <StyledMemoryBlocks sideLength={sideLength}>
+                <div className="memory-blocks__title-wrapper">
+                    <div>Memory</div>
+                    <div>Blocks</div>
+                </div>
                 <div>Level:</div>
                 <div className="memory-blocks__blocks-wrapper">
                     {
                         blocks.map((block) => (
-                            <div
+                            <StyledBlock
                                 key={block.get('id')}
-                                className="memory-blocks__block"
+                                blockId={block.get('id')}
                             >
                                 {block.get('id')}
-                            </div>
+                            </StyledBlock>
                         ))
                     }
                 </div>

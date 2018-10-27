@@ -4,7 +4,7 @@ import {
 } from 'containers/MemoryBlocks/constants';
 
 const defaultBlocks = Array.from(Array(DEFAULT_SIDE_LENGTH * DEFAULT_SIDE_LENGTH), (value, index) => ({
-    id: index + 1,
+    id: index,
 }));
 
 const initialState = fromJS({
