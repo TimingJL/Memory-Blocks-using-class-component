@@ -10,6 +10,10 @@ import {
     makeSelectSideLength,
 } from './selectors';
 
+import {
+    playSoundEffect,
+} from './utils';
+
 class MemoryBlocks extends Component {
     static propTypes = {
         blocks: PropTypes.instanceOf(List),
@@ -18,6 +22,19 @@ class MemoryBlocks extends Component {
     static defaultProps = {
         blocks: List(),
         sideLength: 0,
+    }
+    componentDidMount() {
+        playSoundEffect('correct');
+    }
+    handleOnBlockClick = (event) => {
+        const {
+            blocks,
+        } = this.props;
+        const blockId = event.target.getAttribute('data-id');
+        const audioObject = blocks.getIn([blockId, 'audio'])();
+
+        audioObject.currentTime = 0;
+        audioObject.play();
     }
     render() {
         const {
@@ -37,7 +54,9 @@ class MemoryBlocks extends Component {
                             <StyledBlock
                                 key={block.get('id')}
                                 blockId={block.get('id')}
+                                data-id={block.get('id')}
                                 sideLength={sideLength}
+                                onClick={this.handleOnBlockClick}
                             >
                                 {block.get('id')}
                             </StyledBlock>

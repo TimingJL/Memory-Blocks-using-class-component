@@ -41,6 +41,9 @@ const breathShadow = props => keyframes`
 `;
 
 export const StyledBlock = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     ${(props) => {
         const id = props.blockId;
         const sideLength = props.sideLength;
