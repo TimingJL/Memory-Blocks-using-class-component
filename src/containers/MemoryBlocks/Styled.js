@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
     GAME_WRAPPER_SIZE,
     BLOCK_COLORS,
@@ -10,6 +10,7 @@ export const StyledMemoryBlocks = styled.div`
         font-size: 2em;
         font-weight: 900;
         text-align: right;
+        letter-spacing: 1px;
     }
     .memory-blocks__blocks-wrapper {
         width: ${GAME_WRAPPER_SIZE}px;
@@ -30,14 +31,40 @@ export const StyledMemoryBlocks = styled.div`
     }
 `;
 
+const breathShadow = props => keyframes`
+    0% {
+        box-shadow: none;
+    }
+    100% {
+        box-shadow: 0px 0px 50px ${BLOCK_COLORS[props.blockId] + '80'};
+    }
+`;
+
 export const StyledBlock = styled.div`
+    ${(props) => {
+        const id = props.blockId;
+        const sideLength = props.sideLength;
+        return `
+            border: ${6 / sideLength}px solid ${BLOCK_COLORS[id] + '80'};
+        `;
+    }}
     cursor: pointer;
     transition: 0.5s;
+    background-color: transparent;
+    animation: ${breathShadow} 1.5s infinite alternate-reverse;
+    animation-delay: ${(props) => -2 * Math.random(props.blockId)}s;
+    &:hover {
+        ${(props) => {
+            const id = props.blockId;
+            return `background: ${BLOCK_COLORS[id] + '4d'};`
+        }}
+    }
     &:active {
         ${(props) => {
             const id = props.blockId;
             return `
                 background: ${BLOCK_COLORS[id]};
+                box-shadow: 0px 0px 50px ${BLOCK_COLORS[id]};
             `;
         }}
         transition: 0s;

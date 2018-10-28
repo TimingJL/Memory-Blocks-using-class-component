@@ -37,6 +37,7 @@ class MemoryBlocks extends Component {
                             <StyledBlock
                                 key={block.get('id')}
                                 blockId={block.get('id')}
+                                sideLength={sideLength}
                             >
                                 {block.get('id')}
                             </StyledBlock>
