@@ -1,5 +1,14 @@
-export const DEFAULT_SIDE_LENGTH = 4;
+export const KEY_REDUCER = 'MEMORY_BLOCKS';
+export const SET_INIT = `${KEY_REDUCER}/SET_INIT`;
+export const UPDATE_ANSWER = `${KEY_REDUCER}/UPDATE_ANSWER`;
+
+export const DEFAULT_SIDE_LENGTH = 2;
 export const GAME_WRAPPER_SIZE = 600;
+export const DEFAULT_LEVEL = 1;
+export const SOUND_EFFECT = {
+    correct: 'correct',
+    wrong: 'wrong',
+};
 
 export const BLOCK_COLORS = [
     '#ff5353',

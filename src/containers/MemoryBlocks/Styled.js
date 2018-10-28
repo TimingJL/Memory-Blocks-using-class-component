@@ -13,6 +13,7 @@ export const StyledMemoryBlocks = styled.div`
         letter-spacing: 1px;
     }
     .memory-blocks__blocks-wrapper {
+        position: relative;
         width: ${GAME_WRAPPER_SIZE}px;
         height: ${GAME_WRAPPER_SIZE}px;
         @media only screen and (max-width: 600px) {
@@ -21,13 +22,40 @@ export const StyledMemoryBlocks = styled.div`
         }
         display: grid;
         ${(props) => {
-            const sideLength = props.sideLength;
-            return `
+        const sideLength = props.sideLength;
+        return `
                 grid-template-columns: repeat(${sideLength}, 1fr);
                 grid-template-rows: repeat(${sideLength}, 1fr);
                 grid-gap: ${40 / sideLength}px;
             `;
-        }}
+    }}
+    }
+    .memory-blocks__panel {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .memory-blocks__start-btn {
+        width: 200px;
+        height: 80px;
+        background: black;
+        border: 2px solid white;
+        color: white;
+        border-radius: 40px;
+        font-size: 2em;
+        font-weight: 700;
+        letter-spacing: 1px;
+        cursor: pointer;
+        outline: none;
+        &:hover {
+            color: black;
+            background: white;
+            transition: all 0.8s;
+        }
     }
 `;
 
@@ -41,34 +69,48 @@ const breathShadow = props => keyframes`
 `;
 
 export const StyledBlock = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    ${(props) => {
-        const id = props.blockId;
-        const sideLength = props.sideLength;
-        return `
-            border: ${6 / sideLength}px solid ${BLOCK_COLORS[id] + '80'};
-        `;
-    }}
-    cursor: pointer;
-    transition: 0.5s;
-    background-color: transparent;
-    animation: ${breathShadow} 1.5s infinite alternate-reverse;
-    animation-delay: ${(props) => -2 * Math.random(props.blockId)}s;
-    &:hover {
+    .block__block-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
         ${(props) => {
+            const id = props.blockId;
+            const sideLength = props.sideLength;
+            return `
+                border: ${6 / sideLength}px solid ${BLOCK_COLORS[id] + '80'};
+            `;
+        }}
+        cursor: pointer;
+        transition: 0.5s;
+        background-color: transparent;
+        animation: ${breathShadow} 1.5s infinite alternate-reverse;
+        animation-delay: ${(props) => -2 * Math.random(props.blockId)}s;
+        &:hover {
+            ${(props) => {
             const id = props.blockId;
             return `background: ${BLOCK_COLORS[id] + '4d'};`
         }}
+        }
+        &:active {
+            ${(props) => {
+                const id = props.blockId;
+                return `
+                        background: ${BLOCK_COLORS[id]};
+                        box-shadow: 0px 0px 50px ${BLOCK_COLORS[id]};
+                    `;
+            }}
+            transition: 0s;
+        }
     }
-    &:active {
+    .block__block-item-active {
         ${(props) => {
             const id = props.blockId;
             return `
-                background: ${BLOCK_COLORS[id]};
-                box-shadow: 0px 0px 50px ${BLOCK_COLORS[id]};
-            `;
+                    background: ${BLOCK_COLORS[id]};
+                    box-shadow: 0px 0px 50px ${BLOCK_COLORS[id]};
+                `;
         }}
         transition: 0s;
     }

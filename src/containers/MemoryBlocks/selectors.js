@@ -12,7 +12,19 @@ const makeSelectSideLength = () =>
         tictactoeState.get('sideLength'),
     );
 
+const makeSelectLevelData = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('levelData'),
+    );
+
+const makeSelectIsGameStart = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('isGameStart'),
+    );
+
 export {
     makeSelectBlocks,
     makeSelectSideLength,
+    makeSelectLevelData,
+    makeSelectIsGameStart,
 };
