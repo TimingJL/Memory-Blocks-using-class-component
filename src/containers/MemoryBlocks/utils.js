@@ -1,7 +1,6 @@
 import {
     PIANO_SOUNDS_URL,
     CHORD,
-    BLOCK_COLORS,
 } from 'containers/MemoryBlocks/constants';
 
 export const getAudioObject = (note) => new Audio(PIANO_SOUNDS_URL + note + '.wav');
@@ -26,12 +25,10 @@ export const playLevelSound = (levelData, blocks) => {
 };
 
 export const flashBlock = (id) => {
-    const blockId = `block-${id}`;
-    const backgroundColor = BLOCK_COLORS[id]
-    document.getElementById(blockId).style.background = backgroundColor;
+    document.getElementById(`block-${id}`).classList.add("block__block-item-active");
     setTimeout(() => {
-        document.getElementById(blockId).style.background = '';
-    }, 300);
+        document.getElementById(`block-${id}`).classList.remove("block__block-item-active");
+    }, 200);
 };
 
 export const flashAllBlocks = (blocks) => {
