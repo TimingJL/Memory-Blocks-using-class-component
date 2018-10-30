@@ -23,6 +23,7 @@ import {
     updateAnswer,
     updateIsComplete,
     updateIsCorrect,
+    setGameRestart,
 } from './actions';
 import {
     SOUND_EFFECT,
@@ -32,6 +33,7 @@ import {
     playSoundEffect,
     playLevelSound,
     flashAllBlocks,
+    clearAllTimeouts,
 } from './utils';
 
 class MemoryBlocks extends Component {
@@ -45,6 +47,7 @@ class MemoryBlocks extends Component {
         isCorrect: PropTypes.bool,
         handleSetInit: PropTypes.func,
         handleUpdateAnswer: PropTypes.func,
+        handleSetGameRestart: PropTypes.func,
     }
     static defaultProps = {
         blocks: List(),
@@ -56,6 +59,7 @@ class MemoryBlocks extends Component {
         isCorrect: true,
         handleSetInit: () => { },
         handleUpdateAnswer: () => { },
+        handleSetGameRestart: () => { },
     }
     componentDidUpdate(prevProps, prevState) {
         const {
@@ -117,6 +121,13 @@ class MemoryBlocks extends Component {
             playLevelSound(levelData, blocks);
         }, 2000);
     }
+    handleOnGameRestart = () => {
+        const {
+            handleSetGameRestart,
+        } = this.props;
+        clearAllTimeouts();
+        handleSetGameRestart();
+    }
     render() {
         const {
             levelData,
@@ -132,6 +143,7 @@ class MemoryBlocks extends Component {
                     <div>Memory</div>
                     <div>Blocks</div>
                 </div>
+                <button onClick={this.handleOnGameRestart}>Restart</button>
                 <div className="memory-blocks__info">Level {level}</div>
                 <div className="memory-blocks__blocks-wrapper">
                     {
@@ -179,6 +191,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     handleSetInit: () => dispatch(setInit()),
+    handleSetGameRestart: () => dispatch(setGameRestart()),
     handleUpdateAnswer: (note) => dispatch(updateAnswer(note)),
     handleUpdateIsComplete: (isComplete) => dispatch(updateIsComplete(isComplete)),
     handleUpdateIsCorrect: (isCorrect) => dispatch(updateIsCorrect(isCorrect)),

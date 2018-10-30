@@ -13,6 +13,7 @@ import {
     UPDATE_ANSWER,
     UPDATE_IS_COMPLETE,
     UPDATE_IS_CORRECT,
+    SET_RESTART_GAME,
 } from 'containers/MemoryBlocks/constants';
 
 import {
@@ -40,7 +41,11 @@ const initialState = fromJS({
 function memoryBlocksReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INIT: {
-            return state.set('isGameStart', true);
+            return initialState.set('isGameStart', true);
+        }
+        case SET_RESTART_GAME: {
+            return initialState
+                .set('levelData', fromJS(generateLevelData(DEFAULT_LEVEL, DEFAULT_SIDE_LENGTH)));
         }
         case UPDATE_ANSWER: {
             const updatedAnswer = state.get('answer').push(action.payload);
@@ -53,7 +58,6 @@ function memoryBlocksReducer(state = initialState, action) {
                 // if correct and complete
                 const updatedLevel = level + 1;
                 const updatedSideLength = (sideLength + 1) > MAX_SIDE_LENGTH ? MAX_SIDE_LENGTH : (sideLength + 1);
-                // const updatedChance = (chance + 1) > MAX_CHANCE ? MAX_CHANCE : (chance + 1);
                 return state
                     .set('isComplete', true)
                     .set('level', updatedLevel)

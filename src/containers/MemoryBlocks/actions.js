@@ -3,6 +3,7 @@ import {
     UPDATE_ANSWER,
     UPDATE_IS_COMPLETE,
     UPDATE_IS_CORRECT,
+    SET_RESTART_GAME,
 } from './constants';
 
 export const setInit = () => ({
@@ -22,4 +23,8 @@ export const updateIsComplete = (isComplete) => ({
 export const updateIsCorrect = (isCorrect) => ({
     type: UPDATE_IS_CORRECT,
     payload: isCorrect,
+});
+
+export const setGameRestart = () => ({
+    type: SET_RESTART_GAME,
 });

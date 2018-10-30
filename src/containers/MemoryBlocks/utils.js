@@ -44,3 +44,11 @@ export const generateLevelData = (level, sideLength) => {
     const levelData = Array.from(Array(numOfNote), (value, index) => Math.floor(Math.random() * maxNote));
     return levelData;
 };
+
+export const clearAllTimeouts = () => {
+    // clear "all" timeouts
+    const biggestTimeoutId = window.setTimeout(function () { }, 1);
+    for (let i = 1; i <= biggestTimeoutId; i++) {
+        clearTimeout(i);
+    }
+};
