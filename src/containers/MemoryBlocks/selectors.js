@@ -17,6 +17,11 @@ const selectLevelData = () =>
         tictactoeState.get('levelData'),
     );
 
+const selectAnswer = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('answer'),
+    );
+
 const selectIsGameStart = () =>
     createSelector(selectMemoryBlocks, tictactoeState =>
         tictactoeState.get('isGameStart'),
@@ -37,12 +42,19 @@ const selectIsCorrect = () =>
         tictactoeState.get('isCorrect'),
     );
 
+const selectChance = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('chance'),
+    );
+
 export {
     selectBlocks,
     selectSideLength,
     selectLevelData,
+    selectAnswer,
     selectIsGameStart,
     selectLevel,
     selectIsComplete,
     selectIsCorrect,
+    selectChance,
 };

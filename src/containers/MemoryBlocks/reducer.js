@@ -1,7 +1,11 @@
 import { fromJS, List } from 'immutable';
 import {
     DEFAULT_SIDE_LENGTH,
+    MAX_SIDE_LENGTH,
     DEFAULT_LEVEL,
+    LEVEL_SET,
+    DEFAULT_CHANCE,
+    MAX_CHANCE,
 
     PIANO_SOUNDS,
 
@@ -30,6 +34,7 @@ const initialState = fromJS({
     isGameStart: false,
     isCorrect: true,
     isComplete: false,
+    chance: DEFAULT_CHANCE,
 });
 
 function memoryBlocksReducer(state = initialState, action) {
@@ -42,27 +47,32 @@ function memoryBlocksReducer(state = initialState, action) {
             const levelData = state.get('levelData');
             const level = state.get('level');
             const sideLength = state.get('sideLength');
+            // const chance = state.get('chance');
             const isCorrect = answerVerify(updatedAnswer, levelData);
             if (isCorrect && (updatedAnswer.size === levelData.size)) {
                 // if correct and complete
                 const updatedLevel = level + 1;
-                const updatedSideLength = sideLength + 1;
+                const updatedSideLength = (sideLength + 1) > MAX_SIDE_LENGTH ? MAX_SIDE_LENGTH : (sideLength + 1);
+                // const updatedChance = (chance + 1) > MAX_CHANCE ? MAX_CHANCE : (chance + 1);
                 return state
                     .set('isComplete', true)
                     .set('level', updatedLevel)
                     .set('levelData', fromJS(generateLevelData(updatedLevel, sideLength)))
                     .set('answer', List())
                     .updateIn(['sideLength'], (sideLength) => {
-                        if (updatedLevel % 3 === 0) {
+                        if (updatedLevel % LEVEL_SET === 0) {
                             return updatedSideLength;
                         }
                         return sideLength;
                     })
                     .updateIn(['blocks'], (blocks) => {
-                        if (updatedLevel % 3 === 0) {
+                        if (updatedLevel % LEVEL_SET === 0) {
                             return fromJS(createBlocks(updatedSideLength));
                         }
                         return blocks;
+                    })
+                    .updateIn(['chance'], (chance) => {
+                        return (chance + 1) > MAX_CHANCE ? MAX_CHANCE : (chance + 1);
                     });
             }
             if (isCorrect) {
@@ -72,7 +82,10 @@ function memoryBlocksReducer(state = initialState, action) {
                 // if wrong
                 return state
                     .set('isCorrect', false)
-                    .set('answer', List());
+                    .set('answer', List())
+                    .updateIn(['chance'], (chance) => {
+                        return (chance - 1) < 1 ? 0 : (chance - 1);
+                    });
             }
         }
         case UPDATE_IS_COMPLETE : {

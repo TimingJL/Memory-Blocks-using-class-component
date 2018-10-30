@@ -4,7 +4,13 @@ export const UPDATE_ANSWER = `${KEY_REDUCER}/UPDATE_ANSWER`;
 export const UPDATE_IS_COMPLETE = `${KEY_REDUCER}/UPDATE_IS_COMPLETE`;
 export const UPDATE_IS_CORRECT = `${KEY_REDUCER}/UPDATE_IS_CORRECT`;
 
-export const DEFAULT_SIDE_LENGTH = 5;
+export const DEFAULT_SIDE_LENGTH = 2;
+export const MAX_SIDE_LENGTH = 5;
+export const LEVEL_SET = 5;
+
+export const DEFAULT_CHANCE = 3;
+export const MAX_CHANCE = 5;
+
 export const GAME_WRAPPER_SIZE = 600;
 export const DEFAULT_LEVEL = 1;
 export const SOUND_EFFECT = {

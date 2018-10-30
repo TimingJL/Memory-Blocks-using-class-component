@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { StyledMemoryBlocks } from 'containers/MemoryBlocks/Styled';
 import Block from './components/Block';
+import Progress from './components/Progress';
 
 import {
     selectBlocks,
@@ -14,6 +15,8 @@ import {
     selectLevel,
     selectIsComplete,
     selectIsCorrect,
+    selectAnswer,
+    selectChance,
 } from './selectors';
 import {
     setInit,
@@ -37,6 +40,7 @@ class MemoryBlocks extends Component {
         sideLength: PropTypes.number,
         isGameStart: PropTypes.bool,
         level: PropTypes.number,
+        chance: PropTypes.number,
         isComplete: PropTypes.bool,
         isCorrect: PropTypes.bool,
         handleSetInit: PropTypes.func,
@@ -47,6 +51,7 @@ class MemoryBlocks extends Component {
         sideLength: 0,
         isGameStart: false,
         level: DEFAULT_LEVEL,
+        chance: 0,
         isComplete: false,
         isCorrect: true,
         handleSetInit: () => { },
@@ -57,6 +62,7 @@ class MemoryBlocks extends Component {
             blocks,
             sideLength,
             levelData,
+            chance,
             isComplete,
             isCorrect,
             handleUpdateIsComplete,
@@ -67,7 +73,6 @@ class MemoryBlocks extends Component {
         // 進到下一關，要播放一次
 
         if (isComplete) {
-            // console.log('isComplete');
             handleUpdateIsComplete(false);
             setTimeout(() => {
                 playSoundEffect(SOUND_EFFECT.correct);
@@ -77,7 +82,6 @@ class MemoryBlocks extends Component {
                 playLevelSound(levelData, blocks);
             }, 3000);
         } else if (!isCorrect) {
-            // console.log('isWrong');
             handleUpdateIsCorrect(true);
             setTimeout(() => {
                 playSoundEffect(SOUND_EFFECT.wrong);
@@ -115,6 +119,8 @@ class MemoryBlocks extends Component {
     }
     render() {
         const {
+            levelData,
+            answer,
             isGameStart,
             blocks,
             sideLength,
@@ -150,6 +156,10 @@ class MemoryBlocks extends Component {
                         </div>
                     }
                 </div>
+                <Progress
+                    levelData={levelData}
+                    answer={answer}
+                />
             </StyledMemoryBlocks>
         );
     }
@@ -159,10 +169,12 @@ const mapStateToProps = createStructuredSelector({
     blocks: selectBlocks(),
     sideLength: selectSideLength(),
     levelData: selectLevelData(),
+    answer: selectAnswer(),
     isGameStart: selectIsGameStart(),
     level: selectLevel(),
     isComplete: selectIsComplete(),
     isCorrect: selectIsCorrect(),
+    chance: selectChance(),
 });
 
 const mapDispatchToProps = dispatch => ({

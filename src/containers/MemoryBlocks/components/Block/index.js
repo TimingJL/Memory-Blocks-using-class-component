@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyledBlock } from './Styled';
 
 const Block = ({ blockId, sideLength, handleOnClick }) => (
@@ -11,10 +12,19 @@ const Block = ({ blockId, sideLength, handleOnClick }) => (
             data-id={blockId}
             className="block__block-item"
             onClick={handleOnClick}
-        >
-            {blockId}
-        </div>
+        />
     </StyledBlock>
 );
+
+Block.propTypes = {
+    blockId: PropTypes.number,
+    sideLength: PropTypes.number,
+    handleOnClick: PropTypes.func,
+};
+Block.defaultProps = {
+    blockId: 0,
+    sideLength: 0,
+    handleOnClick: () => { },
+};
 
 export default Block;
