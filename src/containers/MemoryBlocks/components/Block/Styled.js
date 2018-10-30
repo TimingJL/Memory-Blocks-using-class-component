@@ -8,7 +8,7 @@ const breathShadow = props => keyframes`
         box-shadow: none;
     }
     100% {
-        box-shadow: 0px 0px 50px ${BLOCK_COLORS[props.blockId] + '80'};
+        box-shadow: 0px 0px 50px 5px ${BLOCK_COLORS[props.blockId] + '80'};
     }
 `;
 
@@ -34,16 +34,19 @@ export const StyledBlock = styled.div`
         &:hover {
             ${(props) => {
                 const id = props.blockId;
-                return `background: ${BLOCK_COLORS[id] + '4d'};`
+                return `
+                    background: ${BLOCK_COLORS[id] + '4d'};
+                `
             }}
         }
         &:active {
             ${(props) => {
                 const id = props.blockId;
                 return `
-                        background: ${BLOCK_COLORS[id]};
-                        box-shadow: 0px 0px 50px ${BLOCK_COLORS[id]};
-                    `;
+                    animation: none;
+                    background: ${BLOCK_COLORS[id]};
+                    box-shadow: 0px 0px 50px 7px ${BLOCK_COLORS[id]};
+                `;
             }}
             transition: 0s;
         }
@@ -52,9 +55,10 @@ export const StyledBlock = styled.div`
         ${(props) => {
             const id = props.blockId;
             return `
-                    background: ${BLOCK_COLORS[id]};
-                    box-shadow: 0px 0px 50px ${BLOCK_COLORS[id]};
-                `;
+                animation: none;
+                background: ${BLOCK_COLORS[id]};
+                box-shadow: 0px 0px 50px 7px ${BLOCK_COLORS[id]};
+            `;
         }}
         transition: 0s;
     }
