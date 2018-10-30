@@ -2,29 +2,47 @@ import { createSelector } from 'reselect';
 
 const selectMemoryBlocks = state => state.get('memoryBlocks');
 
-const makeSelectBlocks = () =>
+const selectBlocks = () =>
     createSelector(selectMemoryBlocks, tictactoeState =>
         tictactoeState.get('blocks'),
     );
 
-const makeSelectSideLength = () =>
+const selectSideLength = () =>
     createSelector(selectMemoryBlocks, tictactoeState =>
         tictactoeState.get('sideLength'),
     );
 
-const makeSelectLevelData = () =>
+const selectLevelData = () =>
     createSelector(selectMemoryBlocks, tictactoeState =>
         tictactoeState.get('levelData'),
     );
 
-const makeSelectIsGameStart = () =>
+const selectIsGameStart = () =>
     createSelector(selectMemoryBlocks, tictactoeState =>
         tictactoeState.get('isGameStart'),
     );
 
+const selectLevel = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('level'),
+    );
+
+const selectIsComplete = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('isComplete'),
+    );
+
+const selectIsCorrect = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('isCorrect'),
+    );
+
 export {
-    makeSelectBlocks,
-    makeSelectSideLength,
-    makeSelectLevelData,
-    makeSelectIsGameStart,
+    selectBlocks,
+    selectSideLength,
+    selectLevelData,
+    selectIsGameStart,
+    selectLevel,
+    selectIsComplete,
+    selectIsCorrect,
 };

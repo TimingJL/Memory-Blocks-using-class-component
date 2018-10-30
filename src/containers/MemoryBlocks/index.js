@@ -3,20 +3,27 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { StyledMemoryBlocks, StyledBlock } from 'containers/MemoryBlocks/Styled';
+import { StyledMemoryBlocks } from 'containers/MemoryBlocks/Styled';
+import Block from './components/Block';
 
 import {
-    makeSelectBlocks,
-    makeSelectSideLength,
-    makeSelectLevelData,
-    makeSelectIsGameStart,
+    selectBlocks,
+    selectSideLength,
+    selectLevelData,
+    selectIsGameStart,
+    selectLevel,
+    selectIsComplete,
+    selectIsCorrect,
 } from './selectors';
 import {
     setInit,
     updateAnswer,
+    updateIsComplete,
+    updateIsCorrect,
 } from './actions';
 import {
     SOUND_EFFECT,
+    DEFAULT_LEVEL,
 } from './constants';
 import {
     playSoundEffect,
@@ -29,6 +36,9 @@ class MemoryBlocks extends Component {
         blocks: PropTypes.instanceOf(List),
         sideLength: PropTypes.number,
         isGameStart: PropTypes.bool,
+        level: PropTypes.number,
+        isComplete: PropTypes.bool,
+        isCorrect: PropTypes.bool,
         handleSetInit: PropTypes.func,
         handleUpdateAnswer: PropTypes.func,
     }
@@ -36,17 +46,47 @@ class MemoryBlocks extends Component {
         blocks: List(),
         sideLength: 0,
         isGameStart: false,
+        level: DEFAULT_LEVEL,
+        isComplete: false,
+        isCorrect: true,
         handleSetInit: () => { },
         handleUpdateAnswer: () => { },
     }
     componentDidUpdate(prevProps, prevState) {
         const {
             blocks,
+            sideLength,
             levelData,
+            isComplete,
+            isCorrect,
+            handleUpdateIsComplete,
+            handleUpdateIsCorrect,
         } = this.props;
-        setTimeout(() => {
-            playLevelSound(levelData, blocks);
-        }, 2000);
+        // game start 要播放一次
+        // 要求repeat 要播放一次
+        // 進到下一關，要播放一次
+
+        if (isComplete) {
+            // console.log('isComplete');
+            handleUpdateIsComplete(false);
+            setTimeout(() => {
+                playSoundEffect(SOUND_EFFECT.correct);
+                flashAllBlocks(blocks, sideLength);
+            }, 500);
+            setTimeout(() => {
+                playLevelSound(levelData, blocks);
+            }, 3000);
+        } else if (!isCorrect) {
+            // console.log('isWrong');
+            handleUpdateIsCorrect(true);
+            setTimeout(() => {
+                playSoundEffect(SOUND_EFFECT.wrong);
+                flashAllBlocks(blocks, sideLength);
+            }, 500);
+            setTimeout(() => {
+                playLevelSound(levelData, blocks);
+            }, 3000);
+        }
     }
     handleOnBlockClick = (event) => {
         const {
@@ -62,18 +102,23 @@ class MemoryBlocks extends Component {
     }
     handleOnGameStart = () => {
         const {
+            levelData,
             blocks,
             handleSetInit,
         } = this.props;
         handleSetInit();
         playSoundEffect(SOUND_EFFECT.correct);
         flashAllBlocks(blocks);
+        setTimeout(() => {
+            playLevelSound(levelData, blocks);
+        }, 2000);
     }
     render() {
         const {
             isGameStart,
             blocks,
             sideLength,
+            level,
         } = this.props;
         return (
             <StyledMemoryBlocks sideLength={sideLength}>
@@ -81,24 +126,16 @@ class MemoryBlocks extends Component {
                     <div>Memory</div>
                     <div>Blocks</div>
                 </div>
-                <div>Level:</div>
+                <div className="memory-blocks__info">Level {level}</div>
                 <div className="memory-blocks__blocks-wrapper">
                     {
                         blocks.map((block) => (
-                            <StyledBlock
+                            <Block
                                 key={block.get('id')}
                                 blockId={block.get('id')}
                                 sideLength={sideLength}
-                            >
-                                <div
-                                    id={`block-${block.get('id')}`}
-                                    data-id={block.get('id')}
-                                    className="block__block-item"
-                                    onClick={this.handleOnBlockClick}
-                                >
-                                    {block.get('id')}
-                                </div>
-                            </StyledBlock>
+                                handleOnClick={this.handleOnBlockClick}
+                            />
                         ))
                     }
                     {
@@ -119,15 +156,20 @@ class MemoryBlocks extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    blocks: makeSelectBlocks(),
-    sideLength: makeSelectSideLength(),
-    levelData: makeSelectLevelData(),
-    isGameStart: makeSelectIsGameStart(),
+    blocks: selectBlocks(),
+    sideLength: selectSideLength(),
+    levelData: selectLevelData(),
+    isGameStart: selectIsGameStart(),
+    level: selectLevel(),
+    isComplete: selectIsComplete(),
+    isCorrect: selectIsCorrect(),
 });
 
 const mapDispatchToProps = dispatch => ({
     handleSetInit: () => dispatch(setInit()),
     handleUpdateAnswer: (note) => dispatch(updateAnswer(note)),
+    handleUpdateIsComplete: (isComplete) => dispatch(updateIsComplete(isComplete)),
+    handleUpdateIsCorrect: (isCorrect) => dispatch(updateIsCorrect(isCorrect)),
 });
 
 export default connect(

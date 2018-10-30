@@ -1,8 +1,10 @@
 export const KEY_REDUCER = 'MEMORY_BLOCKS';
 export const SET_INIT = `${KEY_REDUCER}/SET_INIT`;
 export const UPDATE_ANSWER = `${KEY_REDUCER}/UPDATE_ANSWER`;
+export const UPDATE_IS_COMPLETE = `${KEY_REDUCER}/UPDATE_IS_COMPLETE`;
+export const UPDATE_IS_CORRECT = `${KEY_REDUCER}/UPDATE_IS_CORRECT`;
 
-export const DEFAULT_SIDE_LENGTH = 2;
+export const DEFAULT_SIDE_LENGTH = 5;
 export const GAME_WRAPPER_SIZE = 600;
 export const DEFAULT_LEVEL = 1;
 export const SOUND_EFFECT = {
@@ -68,6 +70,6 @@ export const PIANO_SOUNDS = [
 ];
 
 export const CHORD = {
-    correct: [1, 3, 5, 8],
-    wrong: [2, 4, 5.5, 7],
+    correct: [1, 3, 5, 8].map((note) => new Audio(PIANO_SOUNDS_URL + note + '.wav')),
+    wrong: [2, 4, 5.5, 7].map((note) => new Audio(PIANO_SOUNDS_URL + note + '.wav')),
 };
