@@ -50,8 +50,9 @@ export const StyledMemoryBlocks = styled.div`
         }}
     }
     .memory-blocks__info {
-        color: red;
-        font-size: 1.5em;
+        color: #FF5353;
+        font-size: 1.2em;
+        font-weight: 900;
         margin: 20px 0px 10px 0px;
     }
     .memory-blocks__panel {
@@ -72,6 +73,7 @@ export const StyledMemoryBlocks = styled.div`
     .memory-blocks__group-btn-wrapper {
         display: flex;
         justify-content: flex-end;
+        margin-top: 10px;
         .memory-blocks__hint-btn {
             margin-right: 10px;
             ${buttonMixin()}
