@@ -66,11 +66,12 @@ class MemoryBlocks extends Component {
             blocks,
             sideLength,
             levelData,
-            // chance,
+            chance,
             isComplete,
             isCorrect,
             handleUpdateIsComplete,
             handleUpdateIsCorrect,
+            handleSetGameRestart,
         } = this.props;
         // game start 要播放一次
         // 要求repeat 要播放一次
@@ -86,14 +87,19 @@ class MemoryBlocks extends Component {
                 playLevelSound(levelData, blocks);
             }, 3000);
         } else if (!isCorrect) {
-            handleUpdateIsCorrect(true);
-            setTimeout(() => {
-                playSoundEffect(SOUND_EFFECT.wrong);
-                flashAllBlocks(blocks, sideLength);
-            }, 500);
-            setTimeout(() => {
-                playLevelSound(levelData, blocks);
-            }, 3000);
+            clearAllTimeouts();
+            if (chance >= 0) {
+                handleUpdateIsCorrect(true);
+                setTimeout(() => {
+                    playSoundEffect(SOUND_EFFECT.wrong);
+                    flashAllBlocks(blocks, sideLength);
+                }, 500);
+                setTimeout(() => {
+                    playLevelSound(levelData, blocks);
+                }, 3000);
+            } else {
+                handleSetGameRestart();
+            }
         }
     }
     handleOnBlockClick = (event) => {

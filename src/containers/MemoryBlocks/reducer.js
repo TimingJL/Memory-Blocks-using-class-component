@@ -41,10 +41,11 @@ const initialState = fromJS({
 function memoryBlocksReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INIT: {
-            return initialState.set('isGameStart', true);
+            return state.set('isGameStart', true);
         }
         case SET_RESTART_GAME: {
             return initialState
+                .set('isGameStart', false)
                 .set('levelData', fromJS(generateLevelData(DEFAULT_LEVEL, DEFAULT_SIDE_LENGTH)));
         }
         case UPDATE_ANSWER: {
@@ -52,7 +53,6 @@ function memoryBlocksReducer(state = initialState, action) {
             const levelData = state.get('levelData');
             const level = state.get('level');
             const sideLength = state.get('sideLength');
-            // const chance = state.get('chance');
             const isCorrect = answerVerify(updatedAnswer, levelData);
             if (isCorrect && (updatedAnswer.size === levelData.size)) {
                 // if correct and complete
@@ -87,9 +87,7 @@ function memoryBlocksReducer(state = initialState, action) {
                 return state
                     .set('isCorrect', false)
                     .set('answer', List())
-                    .updateIn(['chance'], (chance) => {
-                        return (chance - 1) < 1 ? 0 : (chance - 1);
-                    });
+                    .updateIn(['chance'], (chance) => chance - 1);
             }
         }
         case UPDATE_IS_COMPLETE : {
