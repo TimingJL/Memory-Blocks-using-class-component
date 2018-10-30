@@ -136,6 +136,7 @@ class MemoryBlocks extends Component {
             blocks,
             sideLength,
             level,
+            chance,
         } = this.props;
         return (
             <StyledMemoryBlocks sideLength={sideLength}>
@@ -143,7 +144,6 @@ class MemoryBlocks extends Component {
                     <div>Memory</div>
                     <div>Blocks</div>
                 </div>
-                <button onClick={this.handleOnGameRestart}>Restart</button>
                 <div className="memory-blocks__info">Level {level}</div>
                 <div className="memory-blocks__blocks-wrapper">
                     {
@@ -172,6 +172,16 @@ class MemoryBlocks extends Component {
                     levelData={levelData}
                     answer={answer}
                 />
+                {
+                    isGameStart &&
+                    <div className="memory-blocks__group-btn-wrapper">
+                        <button className="memory-blocks__hint-btn memory-blocks__font-music">
+                            <i className="fas fa-music memory-blocks__font-music" />
+                            <span> x {chance}</span>
+                        </button>
+                        <button className="memory-blocks__restart-btn" onClick={this.handleOnGameRestart}>Restart</button>
+                    </div>
+                }
             </StyledMemoryBlocks>
         );
     }

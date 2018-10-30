@@ -3,6 +3,26 @@ import {
     GAME_WRAPPER_SIZE,
 } from './constants';
 
+const buttonMixin = () => `
+    width: 100px;
+    height: 40px;
+    background: #000000b3;
+    border: 2px solid white;
+    color: white;
+    border-radius: 40px;
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.8s;
+    &:hover {
+        color: black;
+        background: white;
+        opacity: 1;
+    }
+`;
+
 export const StyledMemoryBlocks = styled.div`
     .memory-blocks__title-wrapper {
         color: white;
@@ -44,22 +64,23 @@ export const StyledMemoryBlocks = styled.div`
         align-items: center;
     }
     .memory-blocks__start-btn {
-        width: 200px;
-        height: 80px;
-        background: #000000b3;
-        border: 2px solid white;
-        color: white;
-        border-radius: 40px;
+        ${buttonMixin()}
+        width: 150px;
+        height: 60px;
         font-size: 2em;
-        font-weight: 700;
-        letter-spacing: 1px;
-        cursor: pointer;
-        outline: none;
-        transition: all 0.8s;
-        &:hover {
-            color: black;
-            background: white;
-            opacity: 1;
+    }
+    .memory-blocks__group-btn-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        .memory-blocks__hint-btn {
+            margin-right: 10px;
+            ${buttonMixin()}
+        }
+        .memory-blocks__restart-btn {
+            ${buttonMixin()}
+        }
+        .fa-music {
+            color: #3185FC;
         }
     }
 `;
