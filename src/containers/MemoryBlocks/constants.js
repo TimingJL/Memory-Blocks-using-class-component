@@ -5,10 +5,11 @@ export const UPDATE_IS_COMPLETE = `${KEY_REDUCER}/UPDATE_IS_COMPLETE`;
 export const UPDATE_IS_CORRECT = `${KEY_REDUCER}/UPDATE_IS_CORRECT`;
 
 export const SET_RESTART_GAME = `${KEY_REDUCER}/SET_RESTART_GAME`;
+export const SET_REPLAY_SOUND = `${KEY_REDUCER}/SET_REPLAY_SOUND`;
 
 export const DEFAULT_SIDE_LENGTH = 2;
 export const MAX_SIDE_LENGTH = 5;
-export const LEVEL_SET = 1;
+export const LEVEL_SET = 5;
 
 export const DEFAULT_CHANCE = 3;
 export const MAX_CHANCE = 5;

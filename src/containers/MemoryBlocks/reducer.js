@@ -14,6 +14,7 @@ import {
     UPDATE_IS_COMPLETE,
     UPDATE_IS_CORRECT,
     SET_RESTART_GAME,
+    SET_REPLAY_SOUND,
 } from 'containers/MemoryBlocks/constants';
 
 import {
@@ -95,6 +96,10 @@ function memoryBlocksReducer(state = initialState, action) {
         }
         case UPDATE_IS_CORRECT: {
             return state.set('isCorrect', action.payload);
+        }
+        case SET_REPLAY_SOUND: {
+            return state
+                .updateIn(['chance'], (chance) => chance - 1);
         }
         default: {
             return state;

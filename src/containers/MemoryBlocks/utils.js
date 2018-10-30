@@ -39,8 +39,7 @@ export const flashAllBlocks = (blocks) => {
 
 export const generateLevelData = (level, sideLength) => {
     const maxNote = sideLength * sideLength;
-    // const numOfNote = level + sideLength;
-    const numOfNote = 2;
+    const numOfNote = level + sideLength;
     const levelData = Array.from(Array(numOfNote), (value, index) => Math.floor(Math.random() * maxNote));
     return levelData;
 };

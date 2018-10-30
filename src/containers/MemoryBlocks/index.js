@@ -24,6 +24,7 @@ import {
     updateIsComplete,
     updateIsCorrect,
     setGameRestart,
+    setReplaySound,
 } from './actions';
 import {
     SOUND_EFFECT,
@@ -48,6 +49,7 @@ class MemoryBlocks extends Component {
         handleSetInit: PropTypes.func,
         handleUpdateAnswer: PropTypes.func,
         handleSetGameRestart: PropTypes.func,
+        handleSetReplaySound: PropTypes.func,
     }
     static defaultProps = {
         blocks: List(),
@@ -60,6 +62,7 @@ class MemoryBlocks extends Component {
         handleSetInit: () => { },
         handleUpdateAnswer: () => { },
         handleSetGameRestart: () => { },
+        handleSetReplaySound: () => { },
     }
     componentDidUpdate(prevProps, prevState) {
         const {
@@ -77,6 +80,11 @@ class MemoryBlocks extends Component {
         // 要求repeat 要播放一次
         // 進到下一關，要播放一次
 
+        if (chance < 0) {
+            clearAllTimeouts();
+            handleSetGameRestart();
+            return;
+        }
         if (isComplete) {
             handleUpdateIsComplete(false);
             setTimeout(() => {
@@ -88,18 +96,14 @@ class MemoryBlocks extends Component {
             }, 3000);
         } else if (!isCorrect) {
             clearAllTimeouts();
-            if (chance >= 0) {
-                handleUpdateIsCorrect(true);
-                setTimeout(() => {
-                    playSoundEffect(SOUND_EFFECT.wrong);
-                    flashAllBlocks(blocks, sideLength);
-                }, 500);
-                setTimeout(() => {
-                    playLevelSound(levelData, blocks);
-                }, 3000);
-            } else {
-                handleSetGameRestart();
-            }
+            handleUpdateIsCorrect(true);
+            setTimeout(() => {
+                playSoundEffect(SOUND_EFFECT.wrong);
+                flashAllBlocks(blocks, sideLength);
+            }, 500);
+            setTimeout(() => {
+                playLevelSound(levelData, blocks);
+            }, 3000);
         }
     }
     handleOnBlockClick = (event) => {
@@ -133,6 +137,22 @@ class MemoryBlocks extends Component {
         } = this.props;
         clearAllTimeouts();
         handleSetGameRestart();
+    }
+    handleOnReplaySound = () => {
+        const {
+            levelData,
+            blocks,
+            chance,
+            handleSetReplaySound,
+        } = this.props;
+        if (!chance) {
+            return;
+        }
+        clearAllTimeouts();
+        handleSetReplaySound();
+        setTimeout(() => {
+            playLevelSound(levelData, blocks);
+        }, 500);
     }
     render() {
         const {
@@ -181,7 +201,7 @@ class MemoryBlocks extends Component {
                 {
                     isGameStart &&
                     <div className="memory-blocks__group-btn-wrapper">
-                        <button className="memory-blocks__hint-btn memory-blocks__font-music">
+                        <button className="memory-blocks__hint-btn memory-blocks__font-music" onClick={this.handleOnReplaySound}>
                             <i className="fas fa-music memory-blocks__font-music" />
                             <span> x {chance}</span>
                         </button>
@@ -208,6 +228,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     handleSetInit: () => dispatch(setInit()),
     handleSetGameRestart: () => dispatch(setGameRestart()),
+    handleSetReplaySound: () => dispatch(setReplaySound()),
     handleUpdateAnswer: (note) => dispatch(updateAnswer(note)),
     handleUpdateIsComplete: (isComplete) => dispatch(updateIsComplete(isComplete)),
     handleUpdateIsCorrect: (isCorrect) => dispatch(updateIsCorrect(isCorrect)),
