@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/Memory-Blocks/static/js/runtime~main.116f8d1b.js"
   },
   {
-    "revision": "eb41455a8c9f309ea858",
-    "url": "/Memory-Blocks/static/js/main.eb41455a.chunk.js"
+    "revision": "d46d88751b68742ca254",
+    "url": "/Memory-Blocks/static/js/main.d46d8875.chunk.js"
   },
   {
     "revision": "bc6a63aa7b9f9cacc8ca",
     "url": "/Memory-Blocks/static/js/1.bc6a63aa.chunk.js"
   },
   {
-    "revision": "eb41455a8c9f309ea858",
-    "url": "/Memory-Blocks/static/css/main.ef5ba0f3.chunk.css"
+    "revision": "d46d88751b68742ca254",
+    "url": "/Memory-Blocks/static/css/main.596354c8.chunk.css"
   },
   {
-    "revision": "94b3f91b11790a6f2e16086cace28479",
+    "revision": "c9067c150e45fe12a326437e167c3666",
     "url": "/Memory-Blocks/index.html"
   }
 ];
