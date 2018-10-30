@@ -62,7 +62,7 @@ class MemoryBlocks extends Component {
             blocks,
             sideLength,
             levelData,
-            chance,
+            // chance,
             isComplete,
             isCorrect,
             handleUpdateIsComplete,
