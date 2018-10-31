@@ -12,7 +12,6 @@ export const MAX_SIDE_LENGTH = 5;
 export const LEVEL_SET = 5;
 
 export const DEFAULT_CHANCE = 3;
-export const MAX_CHANCE = 5;
 
 export const SHADOW_WIDTH = 50;
 

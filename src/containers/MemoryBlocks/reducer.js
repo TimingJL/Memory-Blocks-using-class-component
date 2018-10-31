@@ -5,7 +5,6 @@ import {
     DEFAULT_LEVEL,
     LEVEL_SET,
     DEFAULT_CHANCE,
-    MAX_CHANCE,
 
     PIANO_SOUNDS,
 
@@ -77,7 +76,7 @@ function memoryBlocksReducer(state = initialState, action) {
                         return blocks;
                     })
                     .updateIn(['chance'], (chance) => {
-                        return (chance + 1) > MAX_CHANCE ? MAX_CHANCE : (chance + 1);
+                        return chance + 1;
                     });
             }
             if (isCorrect) {
