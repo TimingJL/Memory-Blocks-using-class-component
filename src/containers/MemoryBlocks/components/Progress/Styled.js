@@ -5,7 +5,7 @@ import {
 } from 'containers/MemoryBlocks/constants';
 
 const size = 10;
-export const StyledProgress = styled.ul`
+export const StyledProgress = styled.div`
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;

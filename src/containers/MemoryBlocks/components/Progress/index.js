@@ -12,7 +12,7 @@ const Progress = ({ levelData, answer }) => {
         <StyledProgress>
             {
                 progressNode.map((node) => (
-                    <li
+                    <div
                         key={node.id}
                         className={node.className}
                     />
