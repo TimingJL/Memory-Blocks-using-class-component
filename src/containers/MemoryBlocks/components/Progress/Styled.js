@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {
     GAME_WRAPPER_SIZE,
+    SHADOW_WIDTH,
 } from 'containers/MemoryBlocks/constants';
 
 const size = 10;
@@ -12,7 +13,7 @@ export const StyledProgress = styled.ul`
     position: relative;
     width: ${GAME_WRAPPER_SIZE}px;
     @media only screen and (max-width: 600px) {
-        width: 90vw;
+        width: calc(100vw - ${SHADOW_WIDTH}px);
     }
     .progress__node {
         width: ${size}px;

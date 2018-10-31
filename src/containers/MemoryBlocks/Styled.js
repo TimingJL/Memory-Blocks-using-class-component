@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {
     GAME_WRAPPER_SIZE,
+    SHADOW_WIDTH,
 } from './constants';
 
 const buttonMixin = () => `
@@ -36,8 +37,8 @@ export const StyledMemoryBlocks = styled.div`
         width: ${GAME_WRAPPER_SIZE}px;
         height: ${GAME_WRAPPER_SIZE}px;
         @media only screen and (max-width: 600px) {
-            width: 90vw;
-            height: 90vw;
+            width: calc(100vw - ${SHADOW_WIDTH}px);
+            height: calc(100vw - ${SHADOW_WIDTH}px);
         }
         display: grid;
         ${(props) => {
