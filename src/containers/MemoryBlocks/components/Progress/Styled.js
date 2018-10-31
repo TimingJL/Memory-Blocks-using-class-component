@@ -6,15 +6,14 @@ import {
 const size = 10;
 export const StyledProgress = styled.ul`
     display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     margin-top: 20px;
     position: relative;
     width: ${GAME_WRAPPER_SIZE}px;
     @media only screen and (max-width: 600px) {
-        width: calc(100vw - 20px);
+        width: 90vw;
     }
-    display: grid;
-    grid-template-columns: repeat(20, 1fr);
     .progress__node {
         width: ${size}px;
         height: ${size}px;

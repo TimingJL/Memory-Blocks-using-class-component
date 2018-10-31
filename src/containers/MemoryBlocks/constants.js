@@ -14,8 +14,10 @@ export const LEVEL_SET = 5;
 export const DEFAULT_CHANCE = 3;
 export const MAX_CHANCE = 5;
 
+export const SHADOW_WIDTH = 50;
+
 export const GAME_WRAPPER_SIZE = 600;
-export const DEFAULT_LEVEL = 1;
+export const DEFAULT_LEVEL = 21;
 export const SOUND_EFFECT = {
     correct: 'correct',
     wrong: 'wrong',
