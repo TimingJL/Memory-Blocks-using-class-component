@@ -63,4 +63,15 @@ export const StyledBlock = styled.div`
         }}
         transition: 0s;
     }
+    .block__block-item-active-wrong {
+        ${(props) => {
+            const RED = BLOCK_COLORS[0];
+            return `
+                animation: none;
+                background: ${RED};
+                box-shadow: 0px 0px ${SHADOW_WIDTH}px 7px ${RED};
+            `;
+        }}
+        transition: 0s;
+    }
 `;

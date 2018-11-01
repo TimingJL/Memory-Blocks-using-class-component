@@ -97,7 +97,7 @@ class MemoryBlocks extends Component {
             handleUpdateIsComplete(false);
             setTimeout(() => {
                 playSoundEffect(SOUND_EFFECT.correct);
-                flashAllBlocks(blocks, sideLength);
+                flashAllBlocks(blocks, isCorrect);
             }, 500);
             setTimeout(() => {
                 const finishedTime = playLevelSound(levelData, blocks);
@@ -111,7 +111,7 @@ class MemoryBlocks extends Component {
             handleUpdateIsCorrect(true);
             setTimeout(() => {
                 playSoundEffect(SOUND_EFFECT.wrong);
-                flashAllBlocks(blocks, sideLength);
+                flashAllBlocks(blocks, isCorrect);
             }, 500);
             setTimeout(() => {
                 const finishedTime = playLevelSound(levelData, blocks);
@@ -140,13 +140,14 @@ class MemoryBlocks extends Component {
         const {
             levelData,
             blocks,
+            isCorrect,
             handleSetInit,
             handleSetIsPlaying,
         } = this.props;
         handleSetInit();
         handleSetIsPlaying(true);
         playSoundEffect(SOUND_EFFECT.correct);
-        flashAllBlocks(blocks);
+        flashAllBlocks(blocks, isCorrect);
         setTimeout(() => {
             const finishedTime = playLevelSound(levelData, blocks);
             setTimeout(() => {

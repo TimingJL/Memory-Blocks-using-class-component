@@ -19,22 +19,23 @@ export const playLevelSound = (levelData, blocks) => {
             const audioObject = blocks.getIn([blockId.toString(), 'audio'])();
             audioObject.currentTime = 0;
             audioObject.play();
-            flashBlock(blockId);
+            flashBlock(blockId, true);
         }, 500 * index);
     });
     return levelData.size * 500;
 };
 
-export const flashBlock = (id) => {
-    document.getElementById(`block-${id}`).classList.add("block__block-item-active");
+export const flashBlock = (id, isCorrect) => {
+    const blockActiveColor = isCorrect ? 'block__block-item-active' : 'block__block-item-active-wrong';
+    document.getElementById(`block-${id}`).classList.add(blockActiveColor);
     setTimeout(() => {
-        document.getElementById(`block-${id}`).classList.remove("block__block-item-active");
+        document.getElementById(`block-${id}`).classList.remove(blockActiveColor);
     }, 200);
 };
 
-export const flashAllBlocks = (blocks) => {
+export const flashAllBlocks = (blocks, isCorrect) => {
     blocks.forEach((block) => {
-        flashBlock(block.get('id'));
+        flashBlock(block.get('id'), isCorrect);
     });
 };
 
