@@ -17,6 +17,7 @@ import {
     selectIsCorrect,
     selectAnswer,
     selectChance,
+    selectIsPlaying,
 } from './selectors';
 import {
     setInit,
@@ -25,6 +26,7 @@ import {
     updateIsCorrect,
     setGameRestart,
     setReplaySound,
+    setIsPlaying,
 } from './actions';
 import {
     SOUND_EFFECT,
@@ -72,9 +74,11 @@ class MemoryBlocks extends Component {
             chance,
             isComplete,
             isCorrect,
+            isPlaying,
             handleUpdateIsComplete,
             handleUpdateIsCorrect,
             handleSetGameRestart,
+            handleSetIsPlaying,
         } = this.props;
         // game start 要播放一次
         // 要求repeat 要播放一次
@@ -85,16 +89,24 @@ class MemoryBlocks extends Component {
             handleSetGameRestart();
             return;
         }
+        if (isPlaying) {
+            return;
+        }
         if (isComplete) {
+            handleSetIsPlaying(true);
             handleUpdateIsComplete(false);
             setTimeout(() => {
                 playSoundEffect(SOUND_EFFECT.correct);
                 flashAllBlocks(blocks, sideLength);
             }, 500);
             setTimeout(() => {
-                playLevelSound(levelData, blocks);
+                const finishedTime = playLevelSound(levelData, blocks);
+                setTimeout(() => {
+                    handleSetIsPlaying(false);
+                }, finishedTime);
             }, 3000);
         } else if (!isCorrect) {
+            handleSetIsPlaying(true);
             clearAllTimeouts();
             handleUpdateIsCorrect(true);
             setTimeout(() => {
@@ -102,33 +114,44 @@ class MemoryBlocks extends Component {
                 flashAllBlocks(blocks, sideLength);
             }, 500);
             setTimeout(() => {
-                playLevelSound(levelData, blocks);
+                const finishedTime = playLevelSound(levelData, blocks);
+                setTimeout(() => {
+                    handleSetIsPlaying(false);
+                }, finishedTime);
             }, 3000);
         }
     }
     handleOnBlockClick = (event) => {
         const {
+            isPlaying,
             blocks,
             handleUpdateAnswer,
         } = this.props;
+        if (isPlaying) {
+            return;
+        }
         const blockId = event.target.getAttribute('data-id');
         const audioObject = blocks.getIn([blockId, 'audio'])();
-
+        handleUpdateAnswer(parseInt(blockId, 10));
         audioObject.currentTime = 0;
         audioObject.play();
-        handleUpdateAnswer(parseInt(blockId, 10));
     }
     handleOnGameStart = () => {
         const {
             levelData,
             blocks,
             handleSetInit,
+            handleSetIsPlaying,
         } = this.props;
         handleSetInit();
+        handleSetIsPlaying(true);
         playSoundEffect(SOUND_EFFECT.correct);
         flashAllBlocks(blocks);
         setTimeout(() => {
-            playLevelSound(levelData, blocks);
+            const finishedTime = playLevelSound(levelData, blocks);
+            setTimeout(() => {
+                handleSetIsPlaying(false);
+            }, finishedTime);
         }, 2000);
     }
     handleOnGameRestart = () => {
@@ -144,14 +167,19 @@ class MemoryBlocks extends Component {
             blocks,
             chance,
             handleSetReplaySound,
+            handleSetIsPlaying,
         } = this.props;
         if (!chance) {
             return;
         }
         clearAllTimeouts();
+        handleSetIsPlaying(true);
         handleSetReplaySound();
         setTimeout(() => {
-            playLevelSound(levelData, blocks);
+            const finishedTime = playLevelSound(levelData, blocks);
+            setTimeout(() => {
+                handleSetIsPlaying(false);
+            }, finishedTime);
         }, 500);
     }
     render() {
@@ -222,6 +250,7 @@ const mapStateToProps = createStructuredSelector({
     level: selectLevel(),
     isComplete: selectIsComplete(),
     isCorrect: selectIsCorrect(),
+    isPlaying: selectIsPlaying(),
     chance: selectChance(),
 });
 
@@ -232,6 +261,7 @@ const mapDispatchToProps = dispatch => ({
     handleUpdateAnswer: (note) => dispatch(updateAnswer(note)),
     handleUpdateIsComplete: (isComplete) => dispatch(updateIsComplete(isComplete)),
     handleUpdateIsCorrect: (isCorrect) => dispatch(updateIsCorrect(isCorrect)),
+    handleSetIsPlaying: (isPlaying) => dispatch(setIsPlaying(isPlaying)),
 });
 
 export default connect(

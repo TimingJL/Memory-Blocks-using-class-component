@@ -5,6 +5,7 @@ import {
     UPDATE_IS_CORRECT,
     SET_RESTART_GAME,
     SET_REPLAY_SOUND,
+    SET_IS_PLAYING,
 } from './constants';
 
 export const setInit = () => ({
@@ -32,4 +33,9 @@ export const setGameRestart = () => ({
 
 export const setReplaySound = () => ({
     type: SET_REPLAY_SOUND,
+});
+
+export const setIsPlaying = (isPlaying) => ({
+    type: SET_IS_PLAYING,
+    payload: isPlaying,
 });

@@ -42,6 +42,11 @@ const selectIsCorrect = () =>
         tictactoeState.get('isCorrect'),
     );
 
+const selectIsPlaying = () =>
+    createSelector(selectMemoryBlocks, tictactoeState =>
+        tictactoeState.get('isPlaying'),
+    );
+
 const selectChance = () =>
     createSelector(selectMemoryBlocks, tictactoeState =>
         tictactoeState.get('chance'),
@@ -56,5 +61,6 @@ export {
     selectLevel,
     selectIsComplete,
     selectIsCorrect,
+    selectIsPlaying,
     selectChance,
 };

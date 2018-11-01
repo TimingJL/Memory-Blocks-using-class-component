@@ -22,6 +22,7 @@ export const playLevelSound = (levelData, blocks) => {
             flashBlock(blockId);
         }, 500 * index);
     });
+    return levelData.size * 500;
 };
 
 export const flashBlock = (id) => {
