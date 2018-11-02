@@ -10,7 +10,7 @@ export const SET_IS_PLAYING = `${KEY_REDUCER}/SET_IS_PLAYING`;
 
 export const DEFAULT_SIDE_LENGTH = 2;
 export const MAX_SIDE_LENGTH = 5;
-export const LEVEL_SET = 3;
+export const LEVEL_SET = 4;
 
 export const DEFAULT_CHANCE = 5;
 
