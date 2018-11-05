@@ -21,6 +21,7 @@ import {
     getAudioObject,
     generateLevelData,
 } from 'containers/MemoryBlocks/utils';
+import gtag from '../../utils/tracking';
 
 const createBlocks = sideLength => Array.from(Array(sideLength * sideLength), (value, index) => ({
     id: index,
@@ -67,6 +68,10 @@ function memoryBlocksReducer(state = initialState, action) {
                     .set('answer', List())
                     .updateIn(['sideLength'], (sideLength) => {
                         if (updatedLevel % LEVEL_SET === 0) {
+                            gtag('event', 'sideLength', {
+                                'event_category': 'sideLength',
+                                'event_label': updatedSideLength,
+                            });
                             return updatedSideLength;
                         }
                         return sideLength;
@@ -83,9 +88,11 @@ function memoryBlocksReducer(state = initialState, action) {
             }
             if (isCorrect) {
                 // if correct
+                gtag('event', 'Correct');
                 return state.set('answer', updatedAnswer);
             } else {
                 // if wrong
+                gtag('event', 'Wrong');
                 return state
                     .set('isCorrect', false)
                     .set('answer', List())

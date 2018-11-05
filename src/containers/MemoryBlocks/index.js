@@ -38,6 +38,7 @@ import {
     flashAllBlocks,
     clearAllTimeouts,
 } from './utils';
+import gtag from '../../utils/tracking';
 
 class MemoryBlocks extends Component {
     static propTypes = {
@@ -135,6 +136,7 @@ class MemoryBlocks extends Component {
         handleUpdateAnswer(parseInt(blockId, 10));
         audioObject.currentTime = 0;
         audioObject.play();
+        gtag('event', 'Block Click');
     }
     handleOnGameStart = () => {
         const {
@@ -154,6 +156,7 @@ class MemoryBlocks extends Component {
                 handleSetIsPlaying(false);
             }, finishedTime);
         }, 2000);
+        gtag('event', 'Start');
     }
     handleOnGameRestart = () => {
         const {
@@ -161,6 +164,7 @@ class MemoryBlocks extends Component {
         } = this.props;
         clearAllTimeouts();
         handleSetGameRestart();
+        gtag('event', 'Restart');
     }
     handleOnReplaySound = () => {
         const {
@@ -182,6 +186,7 @@ class MemoryBlocks extends Component {
                 handleSetIsPlaying(false);
             }, finishedTime);
         }, 500);
+        gtag('event', 'Replay');
     }
     render() {
         const {
