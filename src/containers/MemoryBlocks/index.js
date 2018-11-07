@@ -70,7 +70,6 @@ class MemoryBlocks extends Component {
     componentDidUpdate(prevProps, prevState) {
         const {
             blocks,
-            sideLength,
             levelData,
             chance,
             isComplete,
